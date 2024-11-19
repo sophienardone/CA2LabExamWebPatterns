@@ -1,6 +1,8 @@
 package webpatterns.persistence;
 
-import model.BlogEntry;
+
+
+import webpatterns.model.BlogEntry;
 
 import java.util.ArrayList;
 

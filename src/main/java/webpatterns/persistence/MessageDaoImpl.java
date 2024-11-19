@@ -1,11 +1,15 @@
 package webpatterns.persistence;
 
-import model.Message;
+
+
+import webpatterns.model.Message;
+import webpatterns.model.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -309,6 +313,67 @@ public class MessageDaoImpl extends MySQLDao implements MessageDao {
         this.freeConnection(con);
         return rowsAffected == 1;
     }
+
+//    @Override
+//    public ArrayList<Message> searchAllMessages(String username){
+//        ArrayList<Message> allMessages = new ArrayList<>();
+//        Connection connection = this.getConnection();
+//
+//        String query = "SELECT * FROM messages WHERE user = ?";
+//        try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+//            preparedStatement.setString(1, username);
+//        }
+//
+//    }
+
+    @Override
+    public List<Message> getAllMessages(){
+      List<Message> messages = new ArrayList<>();
+      Connection connection = super.getConnection();
+
+      try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM messages")){
+          try(ResultSet resultSet = preparedStatement.executeQuery()){
+              while(resultSet.next()){
+                  Message m = mapRow(resultSet);
+                  messages.add(m);
+              }
+          } catch (SQLException e){
+              System.out.println("SQLException occurred while processing results");
+              System.out.println("Error: " + e.getMessage());
+              e.printStackTrace();
+          }
+          } catch (SQLException e){
+          System.out.println("SQLException occurred while preparing SQL execution");
+          System.out.println("Error: " + e.getMessage());
+          e.printStackTrace();
+      }finally {
+          super.freeConnection(connection);
+      }
+      return messages;
+    }
+
+//    @Override
+//    public Message viewMessageDetails(String message){
+//     String specificMessage = "";
+//
+//     Connection connection = super.getConnection();
+//     try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM messages WHERE body LIKE !!")){
+//         preparedStatement.setString(1, message);
+//         try(ResultSet resultSet = preparedStatement.executeQuery()){
+//             if(resultSet.next()){
+//                 specificMessage = mapRow(resultSet);
+//             }
+//         } catch (SQLException e){
+//             System.out.println(LocalDateTime.now() + "SQLException occurred while executing the query");
+//             System.out.println("Error: " + e.getMessage());
+//             e.printStackTrace();
+//         }
+//         return specificMessage;
+//     }
+
+
+
+
 
     public static void main(String[] args) {
         MessageDaoImpl messagesDao = new MessageDaoImpl("database.properties");

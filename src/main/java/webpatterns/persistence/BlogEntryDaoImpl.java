@@ -1,7 +1,9 @@
 package webpatterns.persistence;
 
 
-import model.BlogEntry;
+
+
+import webpatterns.model.BlogEntry;
 
 import java.sql.*;
 import java.time.LocalDateTime;

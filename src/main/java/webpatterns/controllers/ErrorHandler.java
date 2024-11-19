@@ -11,5 +11,5 @@ public class ErrorHandler implements ErrorController {
 
     @RequestMapping(PATH)
     @ResponseBody
-    public String getErrorPath(){ return "No Mapping Found;"}
+    public String getErrorPath(){ return "No Mapping Found;";}
 }

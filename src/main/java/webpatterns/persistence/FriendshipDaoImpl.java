@@ -1,7 +1,9 @@
 package webpatterns.persistence;
 
-import model.Friendship;
-import model.User;
+
+
+import webpatterns.model.Friendship;
+import webpatterns.model.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;

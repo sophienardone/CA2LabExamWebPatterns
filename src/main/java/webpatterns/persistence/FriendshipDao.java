@@ -1,6 +1,8 @@
 package webpatterns.persistence;
 
-import model.Friendship;
+
+
+import webpatterns.model.Friendship;
 
 import java.util.ArrayList;
 

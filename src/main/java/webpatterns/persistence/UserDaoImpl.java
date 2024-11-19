@@ -1,10 +1,13 @@
 package webpatterns.persistence;
 
-import model.User;
+
+
+import lombok.extern.slf4j.Slf4j;
+import webpatterns.model.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-
+@Slf4j
 public class UserDaoImpl extends MySQLDao implements UserDao {
     public UserDaoImpl(String propertiesFile) {
         super(propertiesFile);
@@ -181,6 +184,29 @@ public class UserDaoImpl extends MySQLDao implements UserDao {
         }
         this.freeConnection(con);
         return removed;
+    }
+
+    @Override
+    public User login(String username, String password) {
+        User user = null;
+        Connection c = super.getConnection();
+        try (PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?")) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    user = mapRow(rs);
+                }
+            }catch (SQLException e) {
+                log.error("SQLException occurred when processing login query resultset", e);
+            }
+        }catch (SQLException e) {
+            log.error("SQLException occurred when attempting to login User", e);
+        }
+        super.freeConnection(c);
+
+        return user;
     }
 
     // Sample code showing these methods in use.

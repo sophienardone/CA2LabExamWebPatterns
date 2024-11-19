@@ -1,8 +1,12 @@
 package webpatterns.persistence;
 
-import model.Message;
+
+
+import webpatterns.model.Message;
+import webpatterns.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -48,4 +52,10 @@ public interface MessageDao {
     // If there is no message with that id or if the specified message was not 
     // received by the supplied user, it will return false
     public boolean deleteMessageForRecipient(int messageID, String recipient);
+
+//    public ArrayList<Message> searchAllMessages(String username);
+
+    public List<Message> getAllMessages();
+
+//    public Message viewMessageDetails(String message);
 }
