@@ -1,6 +1,7 @@
 package webpatterns.persistence;
 
-import model.User;
+
+import webpatterns.model.User;
 
 /**
  *
@@ -28,4 +29,6 @@ public interface UserDao
     // This will return true if the user could be removed from the database
     // and false if the user couldn't be removed.
     public boolean removeUser(User u);
+
+    public User login(String username, String password);
 }
